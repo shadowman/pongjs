@@ -1,10 +1,8 @@
-var Pong = Pong || function(screen, width, height) {
+var GameWindow = GameWindow || function(screen, width, height) {
 	'use strict';
 	var self 	 = this,
 		running  = false,
-		fpsCount = 0,
-		tpsCount = 0,
-		MAX_FPS  = 30
+		fpsCount = 0
 		screen;
 
 	this._init = function(screen, width, height) {
@@ -31,10 +29,14 @@ var Pong = Pong || function(screen, width, height) {
 
 	this.render = function() {
 		var ctx = self.screen.getContext('2d');
-		ctx.fillStyle 	= '#000000';
-		ctx.fillRect(0,0, self.screen.width, self.screen.height);
+		self._render(ctx);
 		self._updateFps();
 		self._debugFrameInfo(ctx);
+	};
+
+	this._render = function(ctx) {
+		ctx.fillStyle 	= '#000000';
+		ctx.fillRect(0,0, self.screen.width, self.screen.height);
 	};
 
 	this._debugFrameInfo = function(ctx) {
@@ -67,6 +69,6 @@ var Pong = Pong || function(screen, width, height) {
 };
 
 window.onload = function() {
-	var game = new Pong('viewport', 640, 480);
+	var game = new GameWindow('viewport', 640, 480);
 	game.run();
 };
