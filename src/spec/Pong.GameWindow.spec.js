@@ -73,7 +73,5 @@ describe('GameWindow', function(){
 	});
 
 
-	it('should update the game passing the elapsed time from last tick', function() {
-		expect(true).toBe(false);
-	});
+	it('should update the game passing the elapsed time from last tick');
 });
