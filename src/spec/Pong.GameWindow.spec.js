@@ -1,42 +1,79 @@
-var fs = require('fs');
-var jsdom = require("jsdom");
-
-var codeUnderTest = fs.readFileSync('libs/Pong.GameWindow.js','utf-8');
-eval(codeUnderTest);
-
-window = jsdom.jsdom('<html><head></head><body><canvas id="viewport"></canvas></body></html>').createWindow();
-if(Object.keys(window).length === 0) {
-    // this hapens if contextify, one of jsdom's dependencies doesn't install correctly
-    // (it installs different code depending on the OS, so it cannot get checked in.);
-    throw "jsdom failed to create a usable environment, try uninstalling and reinstalling it";
-}
-global.window = window;
-global.document = window.document;
-
 describe('GameWindow', function(){
-	it('should set the canvas to the provided width and height on creation', function() {
-		var game = new GameWindow('viewport', 200, 300);
+	var gameWindow,
+		fakeGame;
 
-		expect(game.screen.width).toBe(200);
-		expect(game.screen.height).toBe(300);
+	beforeEach(function() {
+		fakeGame = { 
+			render: function() {}, 
+			update: function() {}
+		};
+		
+		gameWindow = new GameWindow('viewport', 200, 300, fakeGame);	
+	});
+	
+	it('should set the canvas to the provided width and height on creation', function() {
+		expect(gameWindow.screen.width).toBe(200);
+		expect(gameWindow.screen.height).toBe(300);
 	});
 
 	it('should find the element with the id viewport on creation', function() {
-		var game = new GameWindow('viewport', 200, 300);
-
-		expect(game.screen.id).toBe('viewport');
+		expect(gameWindow.screen.id).toBe('viewport');
 	});
 
 	it('should be stopped when created for the first time', function() {
-		fail();
+		expect(gameWindow.isRunning()).toBe(false);
 	});
 
-	it('should run the game loop when run gets called', function() {
-		fail();
+	it('should run the gameWindow loop when run gets called', function() {
+		gameWindow.run();
+
+		expect(gameWindow.isRunning()).toBe(true);
 	});
 
-	it('should stop the game loop when stop gets called', function(){
-		fail();
+	it('should stop the gameWindow loop when stop gets called', function(){
+		gameWindow.run();
+		expect(gameWindow.isRunning()).toBe(true);
+
+		gameWindow.stop();
+		expect(gameWindow.isRunning()).toBe(false);
 	});
 
+	it('should call the game\'s render method on run', function() {
+		spyOn(fakeGame, 'render');
+		expect(fakeGame.render.calls.any()).toEqual(false);
+
+		gameWindow.run();
+
+		expect(fakeGame.render.calls.any()).toEqual(true);
+	});
+	
+
+	it('should call the game\'s render method with the render context', function() {
+		spyOn(fakeGame, 'render');
+
+		gameWindow.run();
+
+		expect(fakeGame.render.calls.argsFor(0)[0]).toEqual({
+			context: gameWindow.screen.getContext('2d'), 
+			screen: { 
+				width: gameWindow.screen.width, 
+				height: gameWindow.screen.height
+			}
+		});
+	});
+
+	it('should call the games\'s update method on run', function() {
+
+		spyOn(fakeGame, 'update');
+		expect(fakeGame.update.calls.any()).toEqual(false);
+
+		gameWindow.run();
+
+		expect(fakeGame.update.calls.any()).toEqual(true);
+	});
+
+
+	it('should update the game passing the elapsed time from last tick', function() {
+		expect(true).toBe(false);
+	});
 });
