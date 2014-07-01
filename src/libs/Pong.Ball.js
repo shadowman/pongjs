@@ -17,6 +17,10 @@ var Ball = function() {
 		rctx.closePath();
 	};
 
+	self.update = function(dt) {
+
+	};
+
 	self._init = function() {
 		self.radius = 10;
 		self.position = Sylvester.Vector.Zero(2);

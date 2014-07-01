@@ -19,14 +19,13 @@ describe('Ball', function() {
 	it('should render itself as a circle when render gets called', function() {
 		var rctx = RenderingTestsHelper.create2dRenderContext();
 		var context = rctx.context;
-		spyOn(context, 'beginPath');
 		spyOn(context, 'arc');
-		spyOn(context, 'closePath');
-		spyOn(context, 'stroke');
+		spyOn(context, 'fill');
 		
 		ball.render(rctx)
 		
 		expect(context.arc.calls.any()).toBe(true);
+		expect(context.fill.calls.any()).toBe(true);
 	});
 
 });

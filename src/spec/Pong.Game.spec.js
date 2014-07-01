@@ -30,7 +30,39 @@ describe('Game', function(){
 		expect(ball.render.calls.any()).toBe(true);
 	});
 
-	it('should render each element in the game when render gets called');
+	it('should render each element in the game when render gets called', function() {
+		game.start();
+		for (var eidx = 0; eidx < game.entities; eidx++) {
+			if (game.entities[eidx].render) {
+				spyOn(game.entities[eidx], 'render');
+				expect(game.entities[eidx].render.calls.any()).toBe(false);
+			}
+		}
+		
+		game.render(RenderingTestsHelper.create2dRenderContext());
 
-	it('should update each element in the game when update gets called');
+		for (var eidx = 0; eidx < game.entities; eidx++) {
+			if (game.entities[eidx].render) {
+				expect(game.entities[eidx].render.calls.any()).toBe(true);
+			}
+		}
+	});
+
+	it('should update each element in the game when update gets called', function() {
+		game.start();
+		for (var eidx = 0; eidx < game.entities; eidx++) {
+			if (game.entities[eidx].update) {
+				spyOn(game.entities[eidx], 'update');
+				expect(game.entities[eidx].update.calls.any()).toBe(false);
+			}
+		}
+		
+		game.update(0);
+
+		for (var eidx = 0; eidx < game.entities; eidx++) {
+			if (game.entities[eidx].update) {
+				expect(game.entities[eidx].update.calls.any()).toBe(true);
+			}
+		}
+	});
 });
