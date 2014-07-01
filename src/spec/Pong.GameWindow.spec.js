@@ -4,6 +4,8 @@ describe('GameWindow', function(){
 
 	beforeEach(function() {
 		fakeGame = { 
+			start: function() {},
+			stop: function() {},
 			render: function() {}, 
 			update: function() {}
 		};
@@ -38,6 +40,23 @@ describe('GameWindow', function(){
 		expect(gameWindow.isRunning()).toBe(false);
 	});
 
+	it('should start the game on when run gets called', function() {
+		spyOn(fakeGame, 'start');
+		
+		gameWindow.run();
+
+		expect(fakeGame.start.calls.any()).toBe(true);
+	});
+
+	it('should stop the game when stop gets called', function(){
+		spyOn(fakeGame, 'stop');
+		expect(fakeGame.stop.calls.any()).toEqual(false);
+
+		gameWindow.stop();
+
+		expect(fakeGame.stop.calls.any()).toEqual(true);
+	});
+
 	it('should call the game\'s render method on run', function() {
 		spyOn(fakeGame, 'render');
 		expect(fakeGame.render.calls.any()).toEqual(false);
@@ -47,6 +66,7 @@ describe('GameWindow', function(){
 		expect(fakeGame.render.calls.any()).toEqual(true);
 	});
 	
+
 
 	it('should call the game\'s render method with the render context', function() {
 		spyOn(fakeGame, 'render');

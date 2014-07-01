@@ -29,6 +29,10 @@ var Game = function Game() {
 		);
 	};
 
+	self.stop = function() {
+	
+	};
+
 	self._init = function() {
 		self.entities 	= [];
 		self.players 	= [];

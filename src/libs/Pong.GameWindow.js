@@ -13,6 +13,7 @@ var GameWindow = GameWindow || function(screen, width, height, game) {
 	
 	this.run = function() {
 		running = true;
+		self.game.start();
 		self._run();
 	};
 
@@ -81,6 +82,7 @@ var GameWindow = GameWindow || function(screen, width, height, game) {
 
 	this.stop = function() {
 		running = false;
+		self.game.stop();
 	};
 
 	this._init(screen, width, height, game);
