@@ -22,6 +22,11 @@ describe('Game', function(){
 		expect(game.getScoreForPlayer(0)).toBe(0);
 	});
 
+	it('should add players to the scene');
+	it('should add court to the scene');
+	it('should render the scene when render gets called');
+	it('should update the scene when update gets called');
+
 	it('should give the a ball to player one when game starts', function() {
 		expect(game.players[0].hasTheBall()).toBe(false);
 		
@@ -74,6 +79,6 @@ describe('Game', function(){
 		
 		game.update(0);
 
-		expect(game.physics.integrate.calls.count()).toBe(2);
+		expect(game.physics.integrate.calls.count()).toBe(game.entities.length);
 	});
 });

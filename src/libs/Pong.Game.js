@@ -1,4 +1,4 @@
-var Game = function Game() {
+var Game = function Game(courtWidth, courtHeight) {
 	var self = this;
 		
 	self.update = function(dt) {
@@ -29,28 +29,26 @@ var Game = function Game() {
 	};
 
 	self.start = function() {
-		self.entities.push(
-			new Ball()
-		);
+		self.players[0].giveTheBall();
 	};
 
 	self.stop = function() {
-	
 	};
 
-	self._init = function() {
+	self._init = function(courtWidth, courtHeight) {
 		self.physics 	= new Physics(); 
 		self.entities 	= [];
+		self.court 		= new Court(courtWidth, courtHeight);
 		self.players 	= [];
-
 		self.players.push(new Player());
 		self.players.push(new Player());
 
+		self.entities.push(self.court);
 		self.entities.push(self.players[0]);
 		self.entities.push(self.players[1]);
 	};
 
-	self._init();
+	self._init(courtWidth, courtHeight);
 
 	return this;
 }
