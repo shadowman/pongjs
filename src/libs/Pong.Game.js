@@ -2,7 +2,12 @@ var Game = function Game() {
 	var self = this;
 		
 	self.update = function(dt) {
-
+		for (var idx = 0; idx < self.entities.length; idx++) {
+			var entity 	= self.entities[idx];
+			entity 		= self.physics.integrate(dt, entity);
+			if (entity.update) 
+				entity.update(dt);
+		}
 	};
 
 	self.render = function(context) {		
@@ -34,6 +39,7 @@ var Game = function Game() {
 	};
 
 	self._init = function() {
+		self.physics 	= new Physics(); 
 		self.entities 	= [];
 		self.players 	= [];
 

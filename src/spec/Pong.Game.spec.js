@@ -65,4 +65,15 @@ describe('Game', function(){
 			}
 		}
 	});
+
+	it('should integrate each element in the game when update gets called', function() {
+		game.start();
+
+		spyOn(game.physics, 'integrate').and.callThrough();	
+		expect(game.physics.integrate.calls.any()).toBe(false);
+		
+		game.update(0);
+
+		expect(game.physics.integrate.calls.count()).toBe(3);
+	});
 });
