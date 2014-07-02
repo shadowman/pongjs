@@ -2,7 +2,16 @@ describe('Game', function(){
 	var game;
 
 	beforeEach(function() {
-		game = new Game();	
+		game = new Game(300, 200);	
+	});
+
+	it('should create a court for the players when the game gets created', function() {
+		expect(game.court).not.toBeNull();
+	});
+
+	it('should create a court with the sizes provided', function() {
+		expect(game.court.width).toBe(300);
+		expect(game.court.height).toBe(200);
 	});
 
 	it('should create two players when game gets created', function() {
@@ -13,21 +22,12 @@ describe('Game', function(){
 		expect(game.getScoreForPlayer(0)).toBe(0);
 	});
 
-	it('should create a ball when game starts', function() {
-		game.start();
-
-		expect(game.entities.length).toBe(3);
-	});
-
-	it('should render the ball when render gets called', function() {
-		game.start();
-		spyOn(game.entities[2], 'render');
-		var ball = game.entities[2];
-		expect(ball.render.calls.any()).toBe(false);
+	it('should give the a ball to player one when game starts', function() {
+		expect(game.players[0].hasTheBall()).toBe(false);
 		
-		game.render(RenderingTestsHelper.create2dRenderContext());
+		game.start();
 
-		expect(ball.render.calls.any()).toBe(true);
+		expect(game.players[0].hasTheBall()).toBe(true);
 	});
 
 	it('should render each element in the game when render gets called', function() {
@@ -74,6 +74,6 @@ describe('Game', function(){
 		
 		game.update(0);
 
-		expect(game.physics.integrate.calls.count()).toBe(3);
+		expect(game.physics.integrate.calls.count()).toBe(2);
 	});
 });

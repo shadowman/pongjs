@@ -1,8 +1,12 @@
-var Player = function() {
-	var self = this;
+var Player = function(game) {
+	var self = this, 
+	    _hasTheBall = false,
+	    _game;
 	
-	self._init = function() {
-		self.score = 0;
+	self._init = function(game) {
+		self.score 	= 0;
+		_hasTheBall = false;
+		_game 		= game;
 	};
 
 	self.render = function(context) {
@@ -13,8 +17,15 @@ var Player = function() {
 
 	};
 
-	self._init();
+	self.hasTheBall = function() {
+		return _hasTheBall;
+	};
 
+	self.giveTheBall = function() {
+		_hasTheBall = true;
+	};
+
+	self._init();
 
 	return self;
 };
