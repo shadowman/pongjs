@@ -2,14 +2,10 @@ var Keyboard = function(element) {
 	var self = this,
 		currentKeysState = { };
 	
-	self.keys = {
-		SPACE : 32,
-		LEFT  : 0,
-		RIGHT : 0
-	};
+	
 	
 	self._onKeyUp = function(event) {
-		currentKeysState[key] = false;
+		currentKeysState[event.keyCode] = false;
 	};
 
 	self._onKeyDown = function(event) {
@@ -21,11 +17,17 @@ var Keyboard = function(element) {
 	};
 	
 	self._init = function(element) {
-		element.addEventListener('onkeyup', self._onKeyUp, true);
-		element.addEventListener('onkeyup', self._onKeyDown, true);
+		element.addEventListener('keyup', self._onKeyUp, true);
+		element.addEventListener('keydown', self._onKeyDown, true);
 	};
 	
 	self._init(element);
 
 	return self;
+};
+
+Keyboard.keys = {
+	SPACE : 32,
+	LEFT  : 0,
+	RIGHT : 0
 };
