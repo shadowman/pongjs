@@ -40,8 +40,8 @@ var Game = function Game(courtWidth, courtHeight) {
 		self.entities 	= [];
 		self.court 		= new Court(courtWidth, courtHeight, $V([5,5]));
 		self.players 	= [];
-		self.players.push(new Player($V([0, courtHeight / 2])));
-		self.players.push(new Player($V([courtWidth, courtHeight / 2])));
+		self.players.push(new Player($V([self.court.position.e(1) + 20, courtHeight / 2])));
+		self.players.push(new Player($V([self.court.position.e(1) - 20 + courtWidth, courtHeight / 2])));
 
 		self.entities.push(self.court);
 		self.entities.push(self.players[0]);

@@ -24,13 +24,13 @@ describe('Game', function(){
 	it('should strart player one in the middle of the left side of the court', function() {
 		game.start();
 
-		expect(game.players[0].position).toEqual($V([0, game.court.height / 2]))
+		expect(game.players[0].position).toEqual($V([game.court.position.e(1) + 20, game.court.height / 2]))
 	});
 
 	it('should strart player two in the middle of the right side of the court', function() {
 		game.start();
 
-		expect(game.players[1].position).toEqual($V([game.court.width, game.court.height / 2]))
+		expect(game.players[1].position).toEqual($V([game.court.position.e(1) - 20 + game.court.width, game.court.height / 2]))
 	});
 
 	it('should add players to the scene');

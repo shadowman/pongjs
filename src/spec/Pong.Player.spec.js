@@ -9,7 +9,21 @@ describe('Player', function(){
 		expect(player.score).toBe(0);
 	});
 
-	it('should render itself as a rectangle when render gets called');
+	it('should render itself as a rectangle when render gets called relative to the player position', function() {
+		var context = RenderingTestsHelper.create2dRenderContext();
+		var rctxt = context.context;
+		spyOn(rctxt, 'beginPath');
+		spyOn(rctxt, 'rect');
+		spyOn(rctxt, 'fill');
+		spyOn(rctxt, 'closePath');
+		
+		player.render(context);
+
+		expect(rctxt.beginPath.calls.any()).toBe(true);
+		expect(rctxt.rect.calls.argsFor(0)).toEqual([player.position.e(1) - player.width / 2, player.position.e(2) - player.height / 2, player.width, player.height]);
+		expect(rctxt.fill.calls.any()).toBe(true);
+		expect(rctxt.closePath.calls.any()).toBe(true);
+	});
 	
 	it('should be initialized with a starting position', function() {
 		expect(player.position).toEqual($V([0,0]))
