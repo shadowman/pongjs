@@ -21,7 +21,7 @@ var Game = function Game(courtWidth, courtHeight) {
 	self._clear = function(context) {
 		var ctx = context.context;
 		ctx.fillStyle 	= '#000000';
-		ctx.fillRect(0,0, context.screen.width, context.screen.height);
+		ctx.fillRect(0, 0, context.screen.width, context.screen.height);
 	};
 
 	self.getScoreForPlayer = function(playerNumber) {
@@ -38,10 +38,10 @@ var Game = function Game(courtWidth, courtHeight) {
 	self._init = function(courtWidth, courtHeight) {
 		self.physics 	= new Physics(); 
 		self.entities 	= [];
-		self.court 		= new Court(courtWidth, courtHeight);
+		self.court 		= new Court(courtWidth, courtHeight, $V([5,5]));
 		self.players 	= [];
-		self.players.push(new Player());
-		self.players.push(new Player());
+		self.players.push(new Player($V([0, courtHeight / 2])));
+		self.players.push(new Player($V([courtWidth, courtHeight / 2])));
 
 		self.entities.push(self.court);
 		self.entities.push(self.players[0]);

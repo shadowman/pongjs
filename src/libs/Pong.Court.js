@@ -1,10 +1,10 @@
-var Court = function(width, height) {
+var Court = function(width, height, position) {
 	var self = this;
 	
-	self._init = function(width, height) {
-		self.width = width;
-		self.height = height;
-		self.BORDER_PADDING = 5;
+	self._init = function(width, height, position) {
+		self.width 		= width;
+		self.height 	= height;
+		self.position 	= position;
 	};
 
 
@@ -21,10 +21,7 @@ var Court = function(width, height) {
 		context.strokeStyle = '#FFFFFF';		
 		context.lineWidth = 5;
 		context.rect(
-			self.BORDER_PADDING, 
-			self.BORDER_PADDING, 
-			self.width - 2 * self.BORDER_PADDING, 
-			self.height - 2 * self.BORDER_PADDING
+			self.position.e(1), self.position.e(2), self.width, self.height
 		);
 		context.fill();
 		context.stroke();
@@ -36,8 +33,8 @@ var Court = function(width, height) {
 		context.beginPath();
 		context.strokeStyle = '#FFFFFF';		
 		context.lineWidth = 5;
-		context.moveTo(self.width / 2, self.BORDER_PADDING);
-		context.lineTo(self.width / 2, height - self.BORDER_PADDING );
+		context.moveTo(self.position.e(1) + self.width / 2, self.position.e(2));
+		context.lineTo(self.position.e(1) + self.width / 2, self.position.e(2) + height);
 		context.stroke();
 		context.closePath();
 	};
@@ -46,6 +43,6 @@ var Court = function(width, height) {
 
 	};
 
-	self._init(width, height);
+	self._init(width, height, position);
 	return self;
 };

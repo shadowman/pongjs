@@ -21,6 +21,17 @@ describe('Game', function(){
 	it('should have score set to zero if game just started', function() {
 		expect(game.getScoreForPlayer(0)).toBe(0);
 	});
+	it('should strart player one in the middle of the left side of the court', function() {
+		game.start();
+
+		expect(game.players[0].position).toEqual($V([0, game.court.height / 2]))
+	});
+
+	it('should strart player two in the middle of the right side of the court', function() {
+		game.start();
+
+		expect(game.players[1].position).toEqual($V([game.court.width, game.court.height / 2]))
+	});
 
 	it('should add players to the scene');
 	it('should add court to the scene');
