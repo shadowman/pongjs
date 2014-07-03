@@ -92,6 +92,9 @@ describe('GameWindow', function(){
 		expect(fakeGame.update.calls.any()).toEqual(true);
 	});
 
+	it('should instantiate keyboard for others to use', function() {
+		expect(GameWindow.Keyboard).not.toBeNull();
+	});
 
 	it('should update the game passing the elapsed time from last tick');
 });
