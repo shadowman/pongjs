@@ -20,7 +20,7 @@ var Player = function(position) {
 		return _hasTheBall;
 	};
 
-	self.giveTheBall = function() {
+	self.recieveTheBall = function() {
 		_hasTheBall = true;
 	};
 

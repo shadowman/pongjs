@@ -22,13 +22,13 @@ describe('Player', function(){
 	it('should know if it has the ball', function() {
 		expect(player.hasTheBall()).toBe(false);
 
-		player.giveTheBall();
+		player.recieveTheBall();
 
 		expect(player.hasTheBall()).toBe(true);
 	});
 
 	it('should be able to recieve the ball', function() {
-		player.giveTheBall();
+		player.recieveTheBall();
 
 		expect(player.hasTheBall()).toBe(true);
 	});

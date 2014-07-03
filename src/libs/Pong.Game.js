@@ -29,7 +29,7 @@ var Game = function Game(courtWidth, courtHeight) {
 	};
 
 	self.start = function() {
-		self.players[0].giveTheBall();
+		self.players[0].recieveTheBall();
 	};
 
 	self.stop = function() {
