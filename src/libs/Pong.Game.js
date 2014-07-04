@@ -38,13 +38,40 @@ var Game = function Game(courtWidth, courtHeight) {
 	self._init = function(courtWidth, courtHeight) {
 		self.physics 	= new Physics(); 
 		self.entities 	= [];
-		self.court 		= new Court(courtWidth, courtHeight, $V([5,5]));
 		self.players 	= [];
-		self.players.push(new Player($V([self.court.position.e(1) + 20, courtHeight / 2])));
-		self.players.push(new Player($V([self.court.position.e(1) - 20 + courtWidth, courtHeight / 2])));
+		self._configureCourt();
+		self._configurePlayerOne();
+		self._configurePlayerTwo();
+	};
 
+	self._configureCourt = function() {
+		self.court 		= new Court(courtWidth, courtHeight, $V([5,5]));
 		self.entities.push(self.court);
+	};
+
+	self._configurePlayerOne = function() {
+		self.players.push(
+			new Player(
+				$V([
+					self.court.position.e(1) + 20, 
+					courtHeight / 2
+				]),
+				new KeyboardControlledBehavior()
+			)
+		);
 		self.entities.push(self.players[0]);
+	};
+
+	self._configurePlayerTwo = function() {
+		self.players.push(
+			new Player(
+				$V([
+					self.court.position.e(1) - 20 + courtWidth, 
+					courtHeight / 2
+				]),
+				new KeyboardControlledBehavior()
+			)
+		);
 		self.entities.push(self.players[1]);
 	};
 

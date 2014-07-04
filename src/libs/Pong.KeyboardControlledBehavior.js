@@ -1,11 +1,11 @@
-var KeyboardControlledBehavior = function(keyboard, keymaps) {
+var KeyboardControlledBehavior = function(keymaps, keyboard) {
 	var self = this,
 		keyboardControl, 
 		mappings;
 
 	self._init = function(keyboard, keymaps) {
-		mappings = keymaps;
-		keyboardControl = keyboard;
+		mappings 		= keymaps  || [];
+		keyboardControl = keyboard || Keyboard.getGlobalKeyboard();
 	};
 	
 	self.update = function(dt) {
@@ -23,6 +23,12 @@ var KeyboardControlledBehavior = function(keyboard, keymaps) {
 			allPressed = allPressed && keyboardControl.isKeyPressed(keys[i]);
 		}
 		return allPressed;
+	};
+
+	self.addKeyMapping = function(target, action, keys) {
+		mappings = mappings.concat(
+			{ target: target, action: action, keys: keys }
+		);	
 	};
 
 	self._init(keyboard, keymaps);

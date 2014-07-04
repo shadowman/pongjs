@@ -27,4 +27,13 @@ describe('Keyboard', function() {
 
 		expect(keyboard.isKeyPressed(Keyboard.keys.SPACE)).toBe(false);
 	});
+
+	it('should act as a singleton as well as non-singleton', function() {
+		var keyboard1  = Keyboard.getGlobalKeyboard();
+		var keyboard2  = Keyboard.getGlobalKeyboard();
+
+		expect(keyboard1).not.toBeNull();
+		expect(keyboard2).toEqual(keyboard2);
+
+	})
 });

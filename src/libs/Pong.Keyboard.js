@@ -26,6 +26,13 @@ var Keyboard = function(element) {
 	return self;
 };
 
+Keyboard.getGlobalKeyboard = function() {
+	if (!this.instance) {
+		this.instance = new Keyboard(window);
+	}
+	return self.instance;
+};
+
 Keyboard.keys = {
 	SPACE 		: 32,
 	LEFT  		: 37,
