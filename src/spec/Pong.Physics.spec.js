@@ -28,9 +28,21 @@ describe('Physics', function() {
 		obj.acceleration = $V([1,0]);
 		var dt  = 16;
 		// Sn = Sn-1 + Vn-1 * t + 1/2 a*t^2 = Sn-1
+		// Vn = Vn-1 + a * t
 		obj = physics.integrate(dt, obj);	
 
-		expect(obj.position).toEqual($V([128,0]))
+		expect(obj.position).toEqual($V([128,0]));
+	});
+	
+	it('should integrate velocity from acceleration', function() {
+		var obj = PhysicsTestsHelper.createPhysicsObject();
+		obj.acceleration = $V([1,0]);
+		var dt  = 16;
+		// Sn = Sn-1 + Vn-1 * t + 1/2 a*t^2 = Sn-1
+		// Vn = Vn-1 + a * t
+		obj = physics.integrate(dt, obj);	
+
+		expect(obj.velocity).toEqual($V([16,0]));
 	});
 
 
