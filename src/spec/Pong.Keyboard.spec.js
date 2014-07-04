@@ -33,6 +33,7 @@ describe('Keyboard', function() {
 		var keyboard2  = Keyboard.getGlobalKeyboard();
 
 		expect(keyboard1).not.toBeNull();
+		expect(keyboard1).not.toBeUndefined();
 		expect(keyboard2).toEqual(keyboard2);
 
 	})

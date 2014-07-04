@@ -4,8 +4,10 @@ var Player = function(position, components) {
 	    _components = [];
 	
 	self._init = function(position, components) {
-		self.score 		= 0;
-		self.position 	= position;
+		self.score 		  = 0;
+		self.position 	  = position;
+		self.acceleration = $V([0,0]);
+		self.velocity 	  = $V([0,0]);
 		self.width 		= 15;
 		self.height 	= 60;
 
@@ -42,6 +44,14 @@ var Player = function(position, components) {
 
 	self.recieveTheBall = function() {
 		_hasTheBall = true;
+	};
+
+	self.moveLeft = function () {
+		self.acceleration = self.acceleration.add($V([0, -0.001]));
+	};
+
+	self.moveRight = function () {
+		self.acceleration = self.acceleration.add($V([0, 0.001]));
 	};
 
 	self._init(position, components);

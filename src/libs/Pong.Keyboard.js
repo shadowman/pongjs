@@ -30,7 +30,7 @@ Keyboard.getGlobalKeyboard = function() {
 	if (!this.instance) {
 		this.instance = new Keyboard(window);
 	}
-	return self.instance;
+	return this.instance;
 };
 
 Keyboard.keys = {

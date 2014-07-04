@@ -56,4 +56,19 @@ describe('Player', function(){
 		expect(behavior.update.calls.count()).toBe(2);
 	});
 
+	it('should add <0, -0.001> to acceleration when move left gets called', function() {
+		expect(player.acceleration).toEqual($V([0,0])); 
+
+		player.moveLeft();
+
+		expect(player.acceleration).toEqual($V([0, -0.001])); 
+
+	});
+	it('should add <0, 0.001> to acceleration when move right gets called', function() {
+		expect(player.acceleration).toEqual($V([0,0])); 
+
+		player.moveRight();
+
+		expect(player.acceleration).toEqual($V([0, 0.001])); 
+	});
 });

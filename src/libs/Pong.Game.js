@@ -50,15 +50,20 @@ var Game = function Game(courtWidth, courtHeight) {
 	};
 
 	self._configurePlayerOne = function() {
-		self.players.push(
-			new Player(
-				$V([
-					self.court.position.e(1) + 20, 
-					courtHeight / 2
-				]),
-				new KeyboardControlledBehavior()
-			)
+		var controllerBehavior = new KeyboardControlledBehavior();
+		var player = new Player(
+			$V([
+				self.court.position.e(1) + 20, 
+				courtHeight / 2
+			]),
+			controllerBehavior
 		);
+
+		controllerBehavior.addKeyMapping(player, 'moveLeft', Keyboard.keys.LEFT);
+		controllerBehavior.addKeyMapping(player, 'moveRight', Keyboard.keys.RIGHT);
+		controllerBehavior.addKeyMapping(player, 'throwBall', Keyboard.keys.SPACE);
+
+		self.players.push(player);
 		self.entities.push(self.players[0]);
 	};
 

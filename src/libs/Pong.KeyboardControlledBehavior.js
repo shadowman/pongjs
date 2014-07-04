@@ -19,13 +19,16 @@ var KeyboardControlledBehavior = function(keymaps, keyboard) {
 
 	self._checkKeysPressed = function(keys) {
 		var allPressed = true;
-		for (var i=0; i < keys.length; i++ ) {
+		for (var i = 0; i < keys.length; i++ ) {
 			allPressed = allPressed && keyboardControl.isKeyPressed(keys[i]);
 		}
 		return allPressed;
 	};
 
 	self.addKeyMapping = function(target, action, keys) {
+		if (keys !== null && !(keys instanceof Array)) {
+			keys = [keys];
+		}
 		mappings = mappings.concat(
 			{ target: target, action: action, keys: keys }
 		);	
