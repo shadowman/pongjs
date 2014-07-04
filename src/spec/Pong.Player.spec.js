@@ -56,19 +56,19 @@ describe('Player', function(){
 		expect(behavior.update.calls.count()).toBe(2);
 	});
 
-	it('should add <0, -0.001> to velocity when move left gets called', function() {
-		expect(player.velocity).toEqual($V([0,0])); 
+	it('should add <0, -2> to position when move left gets called', function() {
+		expect(player.position).toEqual($V([0,0])); 
 
 		player.moveLeft();
 
-		expect(player.velocity).toEqual($V([0, -0.0001])); 
+		expect(player.position).toEqual($V([0, -2])); 
 
 	});
-	it('should add <0, 0.001> to velocity when move right gets called', function() {
-		expect(player.velocity).toEqual($V([0,0])); 
+	it('should add <0,  2> to position when move right gets called', function() {
+		expect(player.position).toEqual($V([0,0])); 
 
 		player.moveRight();
 
-		expect(player.velocity).toEqual($V([0, 0.0001])); 
+		expect(player.position).toEqual($V([0, 2])); 
 	});
 });

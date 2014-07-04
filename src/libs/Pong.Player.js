@@ -47,11 +47,11 @@ var Player = function(position, components) {
 	};
 
 	self.moveLeft = function () {
-		self.velocity = self.velocity.add($V([0, -0.001]));
+		self.position = self.position.add($V([0, -2]));
 	};
 
 	self.moveRight = function () {
-		self.velocity = self.velocity.add($V([0, 0.001]));
+		self.position = self.position.add($V([0, 2]));
 	};
 
 	self._init(position, components);

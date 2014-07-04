@@ -17,8 +17,8 @@ var Keyboard = function(element) {
 	};
 	
 	self._init = function(element) {
-		element.addEventListener('keyup', self._onKeyUp, true);
-		element.addEventListener('keydown', self._onKeyDown, true);
+		element.addEventListener('keyup', self._onKeyUp, false);
+		element.addEventListener('keydown', self._onKeyDown, false);
 	};
 	
 	self._init(element);
