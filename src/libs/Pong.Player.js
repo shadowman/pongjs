@@ -1,14 +1,16 @@
-var Player = function(position) {
+var Player = function(position, components) {
 	var self = this, 
-	    _hasTheBall = false;
+	    _hasTheBall = false,
+	    _components = [];
 	
-	self._init = function(position) {
+	self._init = function(position, components) {
 		self.score 		= 0;
 		self.position 	= position;
 		self.width 		= 15;
 		self.height 	= 60;
 
 		_hasTheBall = false;
+		_components = _components.concat(components || []);
 	};
 
 	self.render = function(rctxt) {
@@ -27,7 +29,11 @@ var Player = function(position) {
 	};
 
 	self.update = function(dt) {
-
+		for (var i = 0; i < _components.length; i++) {
+			var component = _components[i];
+			if (component.update) 
+				component.update(dt);
+		}
 	};
 
 	self.hasTheBall = function() {
@@ -38,7 +44,7 @@ var Player = function(position) {
 		_hasTheBall = true;
 	};
 
-	self._init(position);
+	self._init(position, components);
 
 	return self;
 };

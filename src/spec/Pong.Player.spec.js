@@ -47,6 +47,13 @@ describe('Player', function(){
 		expect(player.hasTheBall()).toBe(true);
 	});
 
-	it('should call all his components update on his own update');
+	it('should call all his components update on his own update', function() {
+		var behavior = jasmine.createSpyObj('KeyboardControlledBehavior', ['update']);
+		player = new Player($V([0,0]), [behavior, behavior]);
+
+		player.update(0);
+		
+		expect(behavior.update.calls.count()).toBe(2);
+	});
 
 });
