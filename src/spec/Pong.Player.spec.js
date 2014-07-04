@@ -47,4 +47,6 @@ describe('Player', function(){
 		expect(player.hasTheBall()).toBe(true);
 	});
 
+	it('should call all his components update on his own update');
+
 });

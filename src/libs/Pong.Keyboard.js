@@ -27,7 +27,13 @@ var Keyboard = function(element) {
 };
 
 Keyboard.keys = {
-	SPACE : 32,
-	LEFT  : 0,
-	RIGHT : 0
+	SPACE 		: 32,
+	LEFT  		: 37,
+	RIGHT 		: 39,
+	CTRL  		: 17,
+	Q  	  		: 81,
+	A  	  		: 65,
+	D  	  		: 68,
+	SHIFT 		: 16,
+	ALT 		: 18
 };
