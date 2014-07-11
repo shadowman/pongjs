@@ -1,86 +1,85 @@
 var Game = function Game(courtWidth, courtHeight) {
-	var self = this;
-		
-	self.update = function(dt) {
-		for (var idx = 0; idx < self.entities.length; idx++) {
-			var entity 	= self.entities[idx];
-			entity 		= self.physics.integrate(dt, entity);
-			if (entity.update) 
-				entity.update(dt);
-		}
-	};
+  this.physics = new Physics();
+  this.entities = [];
+  this.players = [];
 
-	self.render = function(context) {		
-		self._clear(context);
-		for (var idx = 0; idx < self.entities.length; idx++) {
-			var entity = self.entities[idx];
-			if (entity.render) entity.render(context);
-		}
-	};
+  configure(this);
 
-	self._clear = function(context) {
-		var ctx = context.context;
-		ctx.fillStyle 	= '#000000';
-		ctx.fillRect(0, 0, context.screen.width, context.screen.height);
-	};
+  this.update = function (dt) {
+    for (var idx = 0; idx < this.entities.length; idx++) {
+      var entity = this.entities[idx];
+      entity = this.physics.integrate(dt, entity);
+      if (entity.update)
+        entity.update(dt);
+    }
+  };
 
-	self.getScoreForPlayer = function(playerNumber) {
-		return self.players[playerNumber].score;
-	};
+  this.render = function (context) {
+    clear(context);
+    for (var idx = 0; idx < this.entities.length; idx++) {
+      var entity = this.entities[idx];
+      if (entity.render) {
+        entity.render(context);
+      }
+    }
 
-	self.start = function() {
-		self.players[0].recieveTheBall();
-	};
+    function clear(context) {
+      var ctx = context.context;
+      ctx.fillStyle = '#000000';
+      ctx.fillRect(0, 0, context.screen.width, context.screen.height);
+    }
+  };
 
-	self.stop = function() {
-	};
+  this.getScoreForPlayer = function (playerNumber) {
+    return this.players[playerNumber].score;
+  };
 
-	self._init = function(courtWidth, courtHeight) {
-		self.physics 	= new Physics(); 
-		self.entities 	= [];
-		self.players 	= [];
-		self._configureCourt();
-		self._configurePlayerOne();
-		self._configurePlayerTwo();
-	};
+  this.start = function () {
+    this.players[0].recieveTheBall();
+  };
 
-	self._configureCourt = function() {
-		self.court 		= new Court(courtWidth, courtHeight, $V([5,5]));
-		self.entities.push(self.court);
-	};
+  this.stop = function () {
+  };
 
-	self._configurePlayerOne = function() {
-		var controllerBehavior = new KeyboardControlledBehavior();
-		var player = new Player(
-			$V([
-				self.court.position.e(1) + 20, 
-				courtHeight / 2
-			]),
-			controllerBehavior
-		);
+  function configure(game) {
+    configureCourt();
+    configurePlayerOne();
+    configurePlayerTwo();
 
-		controllerBehavior.addKeyMapping(player, 'moveLeft', Keyboard.keys.LEFT);
-		controllerBehavior.addKeyMapping(player, 'moveRight', Keyboard.keys.RIGHT);
-		controllerBehavior.addKeyMapping(player, 'throwBall', Keyboard.keys.SPACE);
+    function configureCourt() {
+      game.court = new Court(courtWidth, courtHeight, $V([5, 5]));
+      game.entities.push(game.court);
+    }
 
-		self.players.push(player);
-		self.entities.push(self.players[0]);
-	};
+    function configurePlayerOne() {
+      var controllerBehavior = new KeyboardControlledBehavior();
+      var player = new Player(
+        $V([
+          game.court.position.e(1) + 20,
+          courtHeight / 2
+        ]),
+        controllerBehavior
+      )
 
-	self._configurePlayerTwo = function() {
-		self.players.push(
-			new Player(
-				$V([
-					self.court.position.e(1) - 20 + courtWidth, 
-					courtHeight / 2
-				]),
-				new KeyboardControlledBehavior()
-			)
-		);
-		self.entities.push(self.players[1]);
-	};
+      controllerBehavior.addKeyMapping(player, 'moveLeft', Keyboard.keys.LEFT);
+      controllerBehavior.addKeyMapping(player, 'moveRight', Keyboard.keys.RIGHT);
+      controllerBehavior.addKeyMapping(player, 'throwBall', Keyboard.keys.SPACE);
 
-	self._init(courtWidth, courtHeight);
+      game.players.push(player);
+      game.entities.push(game.players[0]);
+    }
 
-	return this;
-}
+    function configurePlayerTwo() {
+      game.players.push(
+        new Player(
+          $V([
+            game.court.position.e(1) - 20 + courtWidth,
+            courtHeight / 2
+          ]),
+          new KeyboardControlledBehavior()
+        )
+      );
+      game.entities.push(game.players[1]);
+    }
+  }
+};

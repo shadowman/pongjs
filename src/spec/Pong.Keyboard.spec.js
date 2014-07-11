@@ -1,40 +1,40 @@
-describe('Keyboard', function() {
+describe('Keyboard', function () {
+  var keyboard;
 
-	beforeEach(function() {
-		keyboard = new Keyboard(window);
-	});
+  beforeEach(function () {
+    keyboard = new Keyboard(window);
+  });
 
-	it('should bind all key events', function() {
-		spyOn(window,'addEventListener');
-		
-		keyboard = new Keyboard(window);
-		
-		expect(window.addEventListener.calls.argsFor(0)[0]).toBe('keyup');
-		expect(window.addEventListener.calls.argsFor(1)[0]).toBe('keydown');
-	});
+  it('should bind all key events', function () {
+    spyOn(window, 'addEventListener');
 
-	it('should reflect the state of the keyboard on keydown', function() {
-		expect(keyboard.isKeyPressed(Keyboard.keys.SPACE)).toBe(false);
+    keyboard = new Keyboard(window);
 
-		KeyboardTestsHelper.keydown(Keyboard.keys.SPACE);
+    expect(window.addEventListener.calls.argsFor(0)[0]).toBe('keyup');
+    expect(window.addEventListener.calls.argsFor(1)[0]).toBe('keydown');
+  });
 
-		expect(keyboard.isKeyPressed(Keyboard.keys.SPACE)).toBe(true);
-	});
+  it('should reflect the state of the keyboard on keydown', function () {
+    expect(keyboard.isKeyPressed(Keyboard.keys.SPACE)).toBeFalsy();
 
-	it('should reflect the state of the keyboard on keyup', function() {
-		KeyboardTestsHelper.keydown(Keyboard.keys.SPACE);
-		KeyboardTestsHelper.keyup(Keyboard.keys.SPACE);
+    KeyboardTestsHelper.keydown(Keyboard.keys.SPACE);
 
-		expect(keyboard.isKeyPressed(Keyboard.keys.SPACE)).toBe(false);
-	});
+    expect(keyboard.isKeyPressed(Keyboard.keys.SPACE)).toBeTruthy();
+  });
 
-	it('should act as a singleton as well as non-singleton', function() {
-		var keyboard1  = Keyboard.getGlobalKeyboard();
-		var keyboard2  = Keyboard.getGlobalKeyboard();
+  it('should reflect the state of the keyboard on keyup', function () {
+    KeyboardTestsHelper.keydown(Keyboard.keys.SPACE);
+    KeyboardTestsHelper.keyup(Keyboard.keys.SPACE);
 
-		expect(keyboard1).not.toBeNull();
-		expect(keyboard1).not.toBeUndefined();
-		expect(keyboard2).toEqual(keyboard2);
+    expect(keyboard.isKeyPressed(Keyboard.keys.SPACE)).toBeFalsy();
+  });
 
-	})
+  it('should act as a singleton as well as non-singleton', function () {
+    var keyboard1 = Keyboard.getGlobalKeyboard();
+    var keyboard2 = Keyboard.getGlobalKeyboard();
+
+    expect(keyboard1).not.toBeNull();
+    expect(keyboard1).not.toBeUndefined();
+    expect(keyboard1).toEqual(keyboard2);
+  })
 });

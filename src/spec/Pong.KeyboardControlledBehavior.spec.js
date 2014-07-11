@@ -73,11 +73,9 @@ describe('KeyboardControledBehavior', function() {
 	it('should be able to add a new key mapping even if keys is not an array', function() {
 		keyboard.isKeyPressed.and.returnValue(true);
 		component.addKeyMapping(target, 'moveRight', Keyboard.keys.CTRL);
-		spyOn(component, '_checkKeysPressed').and.callThrough();
 
 		component.update(0);
 
 		expect(target.moveRight).toHaveBeenCalled();
-		expect(component._checkKeysPressed.calls.argsFor(0)).toEqual([[Keyboard.keys.CTRL]]);
 	});
 });

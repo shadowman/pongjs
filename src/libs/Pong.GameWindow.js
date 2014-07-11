@@ -1,91 +1,87 @@
-var GameWindow = GameWindow || function(screen, width, height, game) {
-	'use strict';
-	var self 	 = this,
-		running  = false,
-		fpsCount = 0;
+var GameWindow = GameWindow || function (screen, width, height, game) {
+  'use strict';
 
-	this._init = function(screen, width, height, game) {
-		self.screen = document.getElementById(screen);
-		self.screen.width  = width;
-		self.screen.height = height;
-		self.game = game;
-	};
-	
-	this.run = function() {
-		running = true;
-		self.game.start();
-		self._run();
-	};
+  var running = false,
+    fpsCount = 0;
 
-	this.update = function() {
-		self._update(self.currentFrameTime - self.lastFrameTime);
-	};
+  this.screen = document.getElementById(screen);
+  this.screen.width = width;
+  this.screen.height = height;
+  this.game = game;
 
-	this._update = function(dt) {
-		self.game.update(dt);		
-	};
+  this.run = function () {
+    var _gameWindow = this;
+    running = true;
+    this.game.start();
+    run();
 
-	this._updateFrameTimes = function() {
-		self.lastFrameRateIntervalTime 		= self.lastFrameRateIntervalTime || performance.now();
-		self.lastFrameTime 					= self.currentFrameTime || performance.now();
-		self.currentFrameTime 				= performance.now();
-	};
+    function run() {
+      if (running) {
+        window.requestAnimationFrame(run);
+        updateFps();
+        _gameWindow.update();
+        _gameWindow.render();
+      }
 
-	this.render = function() {
-		self._render(self._createRenderContext());
-	};
+      function updateFps() {
+        updateFrameTimes();
+        if (_gameWindow.currentFrameTime - _gameWindow.lastFrameRateIntervalTime > 1000) {
+          _gameWindow.lastFpsCount = _gameWindow.fpsCount;
+          _gameWindow.fpsCount = 0;
+          _gameWindow.lastFrameRateIntervalTime = _gameWindow.currentFrameTime;
+        }
+        _gameWindow.fpsCount++;
 
-	this._createRenderContext = function() {
-		return {
-			context: self.screen.getContext('2d'),
-			screen : {
-				width: self.screen.width,
-				height: self.screen.height
-			}
-		};
-	};
+        function updateFrameTimes() {
+          _gameWindow.lastFrameRateIntervalTime = _gameWindow.lastFrameRateIntervalTime || performance.now();
+          _gameWindow.lastFrameTime = _gameWindow.currentFrameTime || performance.now();
+          _gameWindow.currentFrameTime = performance.now();
+        }
+      }
+    }
+  };
 
-	this._render = function(renderContext) {
-		self.game.render(renderContext);		
-		self._debugFrameInfo(renderContext.context);
-	};
+  this.update = function () {
+    this.game.update(this.currentFrameTime - this.lastFrameTime);
+  };
 
-	this._debugFrameInfo = function(ctx) {
-		ctx.font 		= '30px Arial';
-		ctx.fillStyle 	= '#FFFFFF';
-		ctx.fillText("FPS " + self.lastFpsCount + ' dt:' + (self.currentFrameTime - self.lastFrameTime), 20, 50);
+  this.render = function () {
+    var _gameWindow = this;
+    render(createRenderContext());
 
-	};
+    function render(renderContext) {
+      _gameWindow.game.render(renderContext);
+      debugFrameInfo(renderContext.context);
 
-	this._run = function() {
-		if (running) {
-			window.requestAnimationFrame(self._run);
-			self._updateFps();
-			self.update();
-			self.render();
-		}
-	};
+      function debugFrameInfo(ctx) {
+        ctx.font = '30px Arial';
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillText(
+          "FPS " + _gameWindow.lastFpsCount + ' dt:' +
+            (_gameWindow.currentFrameTime - _gameWindow.lastFrameTime),
+          20,
+          50
+        );
+      }
+    }
 
-	this._updateFps = function() {
-		self._updateFrameTimes();
-		if (self.currentFrameTime - self.lastFrameRateIntervalTime > 1000) {
-			self.lastFpsCount = self.fpsCount;
-			self.fpsCount = 0;
-			self.lastFrameRateIntervalTime = self.currentFrameTime;
-		}
-		self.fpsCount++;
-	};
+    function createRenderContext() {
+      return {
+        context: _gameWindow.screen.getContext('2d'),
+        screen: {
+          width: _gameWindow.screen.width,
+          height: _gameWindow.screen.height
+        }
+      };
+    }
+  };
 
-	this.isRunning = function() {
-		return running;
-	};
+  this.isRunning = function () {
+    return running;
+  };
 
-	this.stop = function() {
-		running = false;
-		self.game.stop();
-	};
-
-	this._init(screen, width, height, game);
-
-	return this;
+  this.stop = function () {
+    running = false;
+    this.game.stop();
+  };
 };

@@ -1,60 +1,50 @@
-var Player = function(position, components) {
-	var self = this, 
-	    _hasTheBall = false,
-	    _components = [];
-	
-	self._init = function(position, components) {
-		self.score 		  = 0;
-		self.position 	  = position;
-		self.acceleration = $V([0,0]);
-		self.velocity 	  = $V([0,0]);
-		self.width 		= 15;
-		self.height 	= 60;
+var Player = function (position, components) {
+  var _hasTheBall = false,
+    _components = [].concat(components || []);
 
-		_hasTheBall = false;
-		_components = _components.concat(components || []);
-	};
+  this.score = 0;
+  this.position = position;
+  this.acceleration = $V([0, 0]);
+  this.velocity = $V([0, 0]);
+  this.width = 15;
+  this.height = 60;
 
-	self.render = function(rctxt) {
-		var context = rctxt.context;
+  this.render = function (rctxt) {
+    var context = rctxt.context;
 
-		context.beginPath();
-		context.fillStyle = '#FFFFFF';
-		context.rect(
-			self.position.e(1) - self.width / 2, 
-			self.position.e(2) - self.height / 2, 
-			self.width, 
-			self.height
-		);
-		context.fill();
-		context.closePath();
-	};
+    context.beginPath();
+    context.fillStyle = '#FFFFFF';
+    context.rect(
+      this.position.e(1) - this.width / 2,
+      this.position.e(2) - this.height / 2,
+      this.width,
+      this.height
+    );
+    context.fill();
+    context.closePath();
+  };
 
-	self.update = function(dt) {
-		for (var i = 0; i < _components.length; i++) {
-			var component = _components[i];
-			if (component.update) 
-				component.update(dt);
-		}
-	};
+  this.update = function (dt) {
+    for (var i = 0; i < _components.length; i++) {
+      var component = _components[i];
+      if (component.update)
+        component.update(dt);
+    }
+  };
 
-	self.hasTheBall = function() {
-		return _hasTheBall;
-	};
+  this.hasTheBall = function () {
+    return _hasTheBall;
+  };
 
-	self.recieveTheBall = function() {
-		_hasTheBall = true;
-	};
+  this.recieveTheBall = function () {
+    _hasTheBall = true;
+  };
 
-	self.moveLeft = function () {
-		self.acceleration = self.acceleration.add($V([0, -0.001]));
-	};
+  this.moveLeft = function () {
+    this.acceleration = this.acceleration.add($V([0, -0.001]));
+  };
 
-	self.moveRight = function () {
-		self.acceleration = self.acceleration.add($V([0, 0.001]));
-	};
-
-	self._init(position, components);
-
-	return self;
+  this.moveRight = function () {
+    this.acceleration = this.acceleration.add($V([0, 0.001]));
+  };
 };
