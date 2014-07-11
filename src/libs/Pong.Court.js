@@ -1,3 +1,5 @@
+'use strict';
+
 var Court = function (width, height, position) {
   this.width = width;
   this.height = height;

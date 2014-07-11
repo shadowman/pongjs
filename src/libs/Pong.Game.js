@@ -1,3 +1,5 @@
+'use strict';
+
 var Game = function Game(courtWidth, courtHeight) {
   this.physics = new Physics();
   this.entities = [];
@@ -6,22 +8,27 @@ var Game = function Game(courtWidth, courtHeight) {
   configure(this);
 
   this.update = function (dt) {
-    for (var idx = 0; idx < this.entities.length; idx++) {
-      var entity = this.entities[idx];
-      entity = this.physics.integrate(dt, entity);
-      if (entity.update)
-        entity.update(dt);
-    }
+    var integrate = this.physics.integrate;
+    _.each(
+      this.entities,
+      function(entity) {
+        entity = integrate(dt, entity);
+        if (entity.update)
+          entity.update(dt);
+      }
+    );
   };
 
   this.render = function (context) {
     clear(context);
-    for (var idx = 0; idx < this.entities.length; idx++) {
-      var entity = this.entities[idx];
-      if (entity.render) {
-        entity.render(context);
+    _.each(
+      this.entities,
+      function(entity) {
+        if (entity.render) {
+          entity.render(context);
+        }
       }
-    }
+    );
 
     function clear(context) {
       var ctx = context.context;

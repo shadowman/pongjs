@@ -1,6 +1,6 @@
-var GameWindow = GameWindow || function (screen, width, height, game) {
-  'use strict';
+'use strict';
 
+var GameWindow = GameWindow || function (screen, width, height, game) {
   var running = false,
     fpsCount = 0;
 

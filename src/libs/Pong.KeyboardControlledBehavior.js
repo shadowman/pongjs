@@ -1,3 +1,5 @@
+'use strict';
+
 var KeyboardControlledBehavior = function (keymaps, keyboard) {
   var keyboardControl = keyboard || Keyboard.getGlobalKeyboard(),
     mappings = keymaps || [];
@@ -12,19 +14,40 @@ var KeyboardControlledBehavior = function (keymaps, keyboard) {
   };
 
   this.update = function (dt) {
-    for (var i = 0; i < mappings.length; i++) {
-      var mapping = mappings[i];
-      if (checkKeysPressed(mapping.keys)) {
-        mapping.target[mapping.action]();
+    _.each(
+      mappings,
+      function (mapping) {
+        if (checkKeysPressed(mapping.keys)) {
+          mapping.target[mapping.action]();
+        }
       }
-    }
+    );
 
     function checkKeysPressed(keys) {
-      var allPressed = true;
-      for (var i = 0; i < keys.length; i++) {
-        allPressed = allPressed && keyboardControl.isKeyPressed(keys[i]);
-      }
-      return allPressed;
+      return _.every(
+        keys,
+        function (key) {
+          return keyboardControl.isKeyPressed(key);
+        }
+      );
     }
   };
+
+//  this.update = function (dt) {
+//    _.each(
+//      mappings,
+//      function (mapping) {
+//        if (checkKeysPressed(mapping.keys)) {
+//          mapping.target[mapping.action]();
+//        }
+//      }
+//    );
+//
+//    function checkKeysPressed(keys) {
+//      return _.every(
+//        keys,
+//        keyboardControl.isKeyPressed
+//      );
+//    }
+//  };
 };

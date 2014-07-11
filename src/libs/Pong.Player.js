@@ -1,3 +1,5 @@
+'use strict';
+
 var Player = function (position, components) {
   var _hasTheBall = false,
     _components = [].concat(components || []);
@@ -25,11 +27,14 @@ var Player = function (position, components) {
   };
 
   this.update = function (dt) {
-    for (var i = 0; i < _components.length; i++) {
-      var component = _components[i];
-      if (component.update)
-        component.update(dt);
-    }
+    _.each(
+      _components,
+      function(component) {
+        if (component.update) {
+          component.update(dt);
+        }
+      }
+    );
   };
 
   this.hasTheBall = function () {

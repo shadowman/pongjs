@@ -1,3 +1,5 @@
+'use strict';
+
 var Physics = function () {
   this.integrate = function (dt, state) {
     state.position = state.position || $V([0, 0]);

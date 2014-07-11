@@ -1,3 +1,5 @@
+'use strict';
+
 var Ball = function (position, color, radius) {
   this.radius = radius || 10;
   this.color = color ? color.toLowerCase() : '#ff0000';
