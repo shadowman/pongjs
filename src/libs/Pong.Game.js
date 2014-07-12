@@ -3,7 +3,6 @@
 var Game = function Game(courtWidth, courtHeight) {
   _.extend(
     this, {
-      physics: Physics,
       entities: [],
       players: [],
       getScoreForPlayer: function (playerNumber) {
@@ -18,11 +17,10 @@ var Game = function Game(courtWidth, courtHeight) {
       },
 
       update: function (dt) {
-        var integrate = this.physics.integrate;
         _.each(
           this.entities,
           function (entity) {
-            entity = integrate(dt, entity);
+            entity = Physics.integrate(dt, entity);
             if (entity.update)
               entity.update(dt);
           }

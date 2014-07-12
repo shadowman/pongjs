@@ -76,12 +76,12 @@ describe('Game', function () {
   it('should integrate each element in the game when update gets called', function () {
     game.start();
 
-    spyOn(game.physics, 'integrate').and.callThrough();
-    expect(game.physics.integrate.calls.any()).toBeFalsy();
+    spyOn(Physics, 'integrate').and.callThrough();
+    expect(Physics.integrate.calls.any()).toBeFalsy();
 
     game.update(0);
 
-    expect(game.physics.integrate.calls.count()).toBe(game.entities.length);
+    expect(Physics.integrate.calls.count()).toBe(game.entities.length);
   });
 
   function spyOnCollection(coll, fnName) {
