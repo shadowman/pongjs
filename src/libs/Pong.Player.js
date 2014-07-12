@@ -42,7 +42,7 @@ var Player = function (position, components) {
         return _hasTheBall;
       },
 
-      recieveTheBall: function () {
+      receiveTheBall: function () {
         _hasTheBall = true;
       },
 

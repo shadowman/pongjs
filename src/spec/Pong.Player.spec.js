@@ -40,13 +40,13 @@ describe('Player', function () {
   it('should know if it has the ball', function () {
     expect(player.hasTheBall()).toBeFalsy();
 
-    player.recieveTheBall();
+    player.receiveTheBall();
 
     expect(player.hasTheBall()).toBeTruthy();
   });
 
-  it('should be able to recieve the ball', function () {
-    player.recieveTheBall();
+  it('should be able to receive the ball', function () {
+    player.receiveTheBall();
 
     expect(player.hasTheBall()).toBeTruthy();
   });
@@ -68,6 +68,7 @@ describe('Player', function () {
     expect(player.acceleration).toEqual($V([0, -0.001]));
 
   });
+
   it('should add <0, 0.001> to acceleration when move right gets called', function () {
     expect(player.acceleration).toEqual($V([0, 0]));
 

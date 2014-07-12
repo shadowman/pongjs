@@ -11,7 +11,7 @@ var Game = function Game(courtWidth, courtHeight) {
       },
 
       start: function () {
-        this.players[0].recieveTheBall();
+        this.players[0].receiveTheBall();
       },
 
       stop: function () {
