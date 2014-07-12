@@ -1,3 +1,5 @@
+'use strict';
+
 describe('Court', function () {
   var court;
 

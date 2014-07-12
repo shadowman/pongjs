@@ -1,3 +1,5 @@
+'use strict';
+
 describe('Physics', function () {
   it('should integrate objects with no state as not moving', function () {
     var obj = {},

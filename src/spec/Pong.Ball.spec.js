@@ -1,3 +1,5 @@
+'use strict';
+
 describe('Ball', function () {
   var ball;
 

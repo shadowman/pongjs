@@ -1,3 +1,5 @@
+'use strict';
+
 describe('KeyboardControledBehavior', function () {
   var component,
     target,

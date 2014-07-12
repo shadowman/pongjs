@@ -1,3 +1,5 @@
+'use strict';
+
 describe('GameWindow', function () {
   var gameWindow,
     fakeGame;
@@ -85,7 +87,6 @@ describe('GameWindow', function () {
   });
 
   it('should call the games\'s update method on run', function () {
-
     spyOn(fakeGame, 'update');
     expect(fakeGame.update.calls.any()).toBeFalsy();
 

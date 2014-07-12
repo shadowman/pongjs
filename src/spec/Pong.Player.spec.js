@@ -1,3 +1,5 @@
+'use strict';
+
 describe('Player', function () {
   var player;
 
@@ -10,8 +12,8 @@ describe('Player', function () {
   });
 
   it('should render itself as a rectangle when render gets called relative to the player position', function () {
-    var context = RenderingTestsHelper.create2dRenderContext();
-    var rctxt = context.context;
+    var context = RenderingTestsHelper.create2dRenderContext(),
+      rctxt = context.context;
     spyOn(rctxt, 'beginPath');
     spyOn(rctxt, 'rect');
     spyOn(rctxt, 'fill');

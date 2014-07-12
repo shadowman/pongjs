@@ -1,3 +1,5 @@
+'use strict';
+
 describe('Keyboard', function () {
   var keyboard;
 
