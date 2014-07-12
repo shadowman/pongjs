@@ -1,52 +1,55 @@
 'use strict';
 
 var Game = function Game(courtWidth, courtHeight) {
-  this.physics = new Physics();
-  this.entities = [];
-  this.players = [];
+  _.extend(
+    this, {
+      physics: new Physics(),
+      entities: [],
+      players: [],
+      getScoreForPlayer: function (playerNumber) {
+        return this.players[playerNumber].score;
+      },
 
-  configure(this);
+      start: function () {
+        this.players[0].recieveTheBall();
+      },
 
-  this.update = function (dt) {
-    var integrate = this.physics.integrate;
-    _.each(
-      this.entities,
-      function(entity) {
-        entity = integrate(dt, entity);
-        if (entity.update)
-          entity.update(dt);
-      }
-    );
-  };
+      stop: function () {
+      },
 
-  this.render = function (context) {
-    clear(context);
-    _.each(
-      this.entities,
-      function(entity) {
-        if (entity.render) {
-          entity.render(context);
+      update: function (dt) {
+        var integrate = this.physics.integrate;
+        _.each(
+          this.entities,
+          function (entity) {
+            entity = integrate(dt, entity);
+            if (entity.update)
+              entity.update(dt);
+          }
+        );
+      },
+
+      render: function (context) {
+        clear(context);
+        _.each(
+          this.entities,
+          function (entity) {
+            if (entity.render) {
+              entity.render(context);
+            }
+          }
+        );
+
+        function clear(context) {
+          var ctx = context.context;
+          ctx.fillStyle = '#000000';
+          ctx.fillRect(0, 0, context.screen.width, context.screen.height);
         }
       }
-    );
-
-    function clear(context) {
-      var ctx = context.context;
-      ctx.fillStyle = '#000000';
-      ctx.fillRect(0, 0, context.screen.width, context.screen.height);
     }
-  };
+  );
 
-  this.getScoreForPlayer = function (playerNumber) {
-    return this.players[playerNumber].score;
-  };
-
-  this.start = function () {
-    this.players[0].recieveTheBall();
-  };
-
-  this.stop = function () {
-  };
+  configure(this);
 
   function configure(game) {
     configureCourt();

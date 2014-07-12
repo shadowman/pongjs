@@ -3,11 +3,15 @@
 var Keyboard = function (element) {
   var currentKeysState = {};
 
-  addEventListeners(element);
+  _.extend(
+    this, {
+      isKeyPressed: function (key) {
+        return currentKeysState[key] ? currentKeysState[key] : false;
+      }
+    }
+  );
 
-  this.isKeyPressed = function (key) {
-    return currentKeysState[key] ? currentKeysState[key] : false;
-  };
+  addEventListeners(element);
 
   function addEventListeners(element) {
     element.addEventListener('keyup', onKeyUp, true);
@@ -23,21 +27,25 @@ var Keyboard = function (element) {
   }
 };
 
-Keyboard.getGlobalKeyboard = function () {
-  if (!this.instance) {
-    this.instance = new Keyboard(window);
-  }
-  return this.instance;
-};
+_.extend(
+  Keyboard, {
+    getGlobalKeyboard: function () {
+      if (!this.instance) {
+        this.instance = new Keyboard(window);
+      }
+      return this.instance;
+    },
 
-Keyboard.keys = {
-  SPACE: 32,
-  LEFT: 37,
-  RIGHT: 39,
-  CTRL: 17,
-  Q: 81,
-  A: 65,
-  D: 68,
-  SHIFT: 16,
-  ALT: 18
-};
+    keys: {
+      SPACE: 32,
+      LEFT: 37,
+      RIGHT: 39,
+      CTRL: 17,
+      Q: 81,
+      A: 65,
+      D: 68,
+      SHIFT: 16,
+      ALT: 18
+    }
+  }
+);
