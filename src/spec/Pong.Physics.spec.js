@@ -34,7 +34,6 @@ describe('Physics', function () {
       dt = 16;
     obj.velocity = $V([1, 0]);
 
-
     // Sn = Sn-1 + Vn-1 * t + 1/2 a*t^2 = Sn-1
     obj = Physics.integrate(dt, obj);
 

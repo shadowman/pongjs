@@ -1,100 +1,103 @@
-describe('GameWindow', function(){
-	var gameWindow,
-		fakeGame;
+describe('GameWindow', function () {
+  var gameWindow,
+    fakeGame;
 
-	beforeEach(function() {
-		fakeGame = { 
-			start: function() {},
-			stop: function() {},
-			render: function() {}, 
-			update: function() {}
-		};
-		
-		gameWindow = new GameWindow('viewport', 200, 300, fakeGame);	
-	});
-	
-	it('should set the canvas to the provided width and height on creation', function() {
-		expect(gameWindow.screen.width).toBe(200);
-		expect(gameWindow.screen.height).toBe(300);
-	});
+  beforeEach(function () {
+    fakeGame = {
+      start: function () {
+      },
+      stop: function () {
+      },
+      render: function () {
+      },
+      update: function () {
+      }
+    };
 
-	it('should find the element with the id viewport on creation', function() {
-		expect(gameWindow.screen.id).toBe('viewport');
-	});
+    gameWindow = new GameWindow('viewport', 200, 300, fakeGame);
+  });
 
-	it('should be stopped when created for the first time', function() {
-		expect(gameWindow.isRunning()).toBe(false);
-	});
+  it('should set the canvas to the provided width and height on creation', function () {
+    expect(gameWindow.screen.width).toBe(200);
+    expect(gameWindow.screen.height).toBe(300);
+  });
 
-	it('should run the gameWindow loop when run gets called', function() {
-		gameWindow.run();
+  it('should find the element with the id viewport on creation', function () {
+    expect(gameWindow.screen.id).toBe('viewport');
+  });
 
-		expect(gameWindow.isRunning()).toBe(true);
-	});
+  it('should be stopped when created for the first time', function () {
+    expect(gameWindow.isRunning()).toBeFalsy();
+  });
 
-	it('should stop the gameWindow loop when stop gets called', function(){
-		gameWindow.run();
-		expect(gameWindow.isRunning()).toBe(true);
+  it('should run the gameWindow loop when run gets called', function () {
+    gameWindow.run();
 
-		gameWindow.stop();
-		expect(gameWindow.isRunning()).toBe(false);
-	});
+    expect(gameWindow.isRunning()).toBeTruthy();
+  });
 
-	it('should start the game on when run gets called', function() {
-		spyOn(fakeGame, 'start');
-		
-		gameWindow.run();
+  it('should stop the gameWindow loop when stop gets called', function () {
+    gameWindow.run();
+    expect(gameWindow.isRunning()).toBeTruthy();
 
-		expect(fakeGame.start.calls.any()).toBe(true);
-	});
+    gameWindow.stop();
+    expect(gameWindow.isRunning()).toBeFalsy();
+  });
 
-	it('should stop the game when stop gets called', function(){
-		spyOn(fakeGame, 'stop');
-		expect(fakeGame.stop.calls.any()).toEqual(false);
+  it('should start the game on when run gets called', function () {
+    spyOn(fakeGame, 'start');
 
-		gameWindow.stop();
+    gameWindow.run();
 
-		expect(fakeGame.stop.calls.any()).toEqual(true);
-	});
+    expect(fakeGame.start.calls.any()).toBeTruthy();
+  });
 
-	it('should call the game\'s render method on run', function() {
-		spyOn(fakeGame, 'render');
-		expect(fakeGame.render.calls.any()).toEqual(false);
+  it('should stop the game when stop gets called', function () {
+    spyOn(fakeGame, 'stop');
+    expect(fakeGame.stop.calls.any()).toBeFalsy();
 
-		gameWindow.run();
+    gameWindow.stop();
 
-		expect(fakeGame.render.calls.any()).toEqual(true);
-	});
-	
+    expect(fakeGame.stop.calls.any()).toBeTruthy();
+  });
 
+  it('should call the game\'s render method on run', function () {
+    spyOn(fakeGame, 'render');
+    expect(fakeGame.render.calls.any()).toBeFalsy();
 
-	it('should call the game\'s render method with the render context', function() {
-		spyOn(fakeGame, 'render');
+    gameWindow.run();
 
-		gameWindow.run();
+    expect(fakeGame.render.calls.any()).toBeTruthy();
+  });
 
-		expect(fakeGame.render.calls.argsFor(0)[0]).toEqual({
-			context: gameWindow.screen.getContext('2d'), 
-			screen: { 
-				width: gameWindow.screen.width, 
-				height: gameWindow.screen.height
-			}
-		});
-	});
+  it('should call the game\'s render method with the render context', function () {
+    spyOn(fakeGame, 'render');
 
-	it('should call the games\'s update method on run', function() {
+    gameWindow.run();
 
-		spyOn(fakeGame, 'update');
-		expect(fakeGame.update.calls.any()).toEqual(false);
+    expect(fakeGame.render.calls.argsFor(0)[0]).toEqual({
+      context: gameWindow.screen.getContext('2d'),
+      screen: {
+        width: gameWindow.screen.width,
+        height: gameWindow.screen.height
+      }
+    });
+  });
 
-		gameWindow.run();
+  it('should call the games\'s update method on run', function () {
 
-		expect(fakeGame.update.calls.any()).toEqual(true);
-	});
+    spyOn(fakeGame, 'update');
+    expect(fakeGame.update.calls.any()).toBeFalsy();
 
-	it('should instantiate keyboard for others to use', function() {
-		expect(GameWindow.Keyboard).not.toBeNull();
-	});
+    gameWindow.run();
 
-	it('should update the game passing the elapsed time from last tick');
+    expect(fakeGame.update.calls.any()).toBeTruthy();
+  });
+
+  it('should instantiate keyboard for others to use', function () {
+    expect(GameWindow.Keyboard).not.toBeNull();
+  });
+
+  it('should update the game passing the elapsed time from last tick');
+
 });

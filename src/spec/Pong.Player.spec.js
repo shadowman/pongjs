@@ -1,74 +1,74 @@
-describe('Player', function(){
-	var player;
+describe('Player', function () {
+  var player;
 
-	beforeEach(function() {
-		player = new Player($V([0,0]));	
-	});
+  beforeEach(function () {
+    player = new Player($V([0, 0]));
+  });
 
-	it('should have a zero score when first created', function() {
-		expect(player.score).toBe(0);
-	});
+  it('should have a zero score when first created', function () {
+    expect(player.score).toBe(0);
+  });
 
-	it('should render itself as a rectangle when render gets called relative to the player position', function() {
-		var context = RenderingTestsHelper.create2dRenderContext();
-		var rctxt = context.context;
-		spyOn(rctxt, 'beginPath');
-		spyOn(rctxt, 'rect');
-		spyOn(rctxt, 'fill');
-		spyOn(rctxt, 'closePath');
-		
-		player.render(context);
+  it('should render itself as a rectangle when render gets called relative to the player position', function () {
+    var context = RenderingTestsHelper.create2dRenderContext();
+    var rctxt = context.context;
+    spyOn(rctxt, 'beginPath');
+    spyOn(rctxt, 'rect');
+    spyOn(rctxt, 'fill');
+    spyOn(rctxt, 'closePath');
 
-		expect(rctxt.beginPath.calls.any()).toBe(true);
-		expect(rctxt.rect.calls.argsFor(0)).toEqual([player.position.e(1) - player.width / 2, player.position.e(2) - player.height / 2, player.width, player.height]);
-		expect(rctxt.fill.calls.any()).toBe(true);
-		expect(rctxt.closePath.calls.any()).toBe(true);
-	});
-	
-	it('should be initialized with a starting position', function() {
-		expect(player.position).toEqual($V([0,0]))
-	});
+    player.render(context);
 
-	it('should start without the ball', function () {
-		expect(player.hasTheBall()).toBe(false);
-	});
+    expect(rctxt.beginPath.calls.any()).toBeTruthy();
+    expect(rctxt.rect.calls.argsFor(0)).toEqual([player.position.e(1) - player.width / 2, player.position.e(2) - player.height / 2, player.width, player.height]);
+    expect(rctxt.fill.calls.any()).toBeTruthy();
+    expect(rctxt.closePath.calls.any()).toBeTruthy();
+  });
 
-	it('should know if it has the ball', function() {
-		expect(player.hasTheBall()).toBe(false);
+  it('should be initialized with a starting position', function () {
+    expect(player.position).toEqual($V([0, 0]))
+  });
 
-		player.recieveTheBall();
+  it('should start without the ball', function () {
+    expect(player.hasTheBall()).toBeFalsy();
+  });
 
-		expect(player.hasTheBall()).toBe(true);
-	});
+  it('should know if it has the ball', function () {
+    expect(player.hasTheBall()).toBeFalsy();
 
-	it('should be able to recieve the ball', function() {
-		player.recieveTheBall();
+    player.recieveTheBall();
 
-		expect(player.hasTheBall()).toBe(true);
-	});
+    expect(player.hasTheBall()).toBeTruthy();
+  });
 
-	it('should call all his components update on his own update', function() {
-		var behavior = jasmine.createSpyObj('KeyboardControlledBehavior', ['update']);
-		player = new Player($V([0,0]), [behavior, behavior]);
+  it('should be able to recieve the ball', function () {
+    player.recieveTheBall();
 
-		player.update(0);
-		
-		expect(behavior.update.calls.count()).toBe(2);
-	});
+    expect(player.hasTheBall()).toBeTruthy();
+  });
 
-	it('should add <0, -0.001> to acceleration when move left gets called', function() {
-		expect(player.acceleration).toEqual($V([0,0])); 
+  it('should call all his components update on his own update', function () {
+    var behavior = jasmine.createSpyObj('KeyboardControlledBehavior', ['update']);
+    player = new Player($V([0, 0]), [behavior, behavior]);
 
-		player.moveLeft();
+    player.update(0);
 
-		expect(player.acceleration).toEqual($V([0, -0.001])); 
+    expect(behavior.update.calls.count()).toBe(2);
+  });
 
-	});
-	it('should add <0, 0.001> to acceleration when move right gets called', function() {
-		expect(player.acceleration).toEqual($V([0,0])); 
+  it('should add <0, -0.001> to acceleration when move left gets called', function () {
+    expect(player.acceleration).toEqual($V([0, 0]));
 
-		player.moveRight();
+    player.moveLeft();
 
-		expect(player.acceleration).toEqual($V([0, 0.001])); 
-	});
+    expect(player.acceleration).toEqual($V([0, -0.001]));
+
+  });
+  it('should add <0, 0.001> to acceleration when move right gets called', function () {
+    expect(player.acceleration).toEqual($V([0, 0]));
+
+    player.moveRight();
+
+    expect(player.acceleration).toEqual($V([0, 0.001]));
+  });
 });
