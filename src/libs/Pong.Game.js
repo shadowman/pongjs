@@ -3,7 +3,7 @@
 var Game = function Game(courtWidth, courtHeight) {
   _.extend(
     this, {
-      physics: new Physics(),
+      physics: Physics,
       entities: [],
       players: [],
       getScoreForPlayer: function (playerNumber) {
