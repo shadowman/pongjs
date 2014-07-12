@@ -30,5 +30,6 @@ var Ball = function (position, color, radius) {
       update: function (dt) {
 
       }
-    });
+    }
+  );
 };
