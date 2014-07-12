@@ -20,7 +20,9 @@ describe('Player', function () {
     player.render(context);
 
     expect(rctxt.beginPath.calls.any()).toBeTruthy();
-    expect(rctxt.rect.calls.argsFor(0)).toEqual([player.position.e(1) - player.width / 2, player.position.e(2) - player.height / 2, player.width, player.height]);
+    expect(rctxt.rect.calls.argsFor(0)).toEqual(
+      [player.position.e(1) - player.width / 2, player.position.e(2) - player.height / 2, player.width, player.height]
+    );
     expect(rctxt.fill.calls.any()).toBeTruthy();
     expect(rctxt.closePath.calls.any()).toBeTruthy();
   });

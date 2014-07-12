@@ -17,14 +17,14 @@ describe('Keyboard', function () {
   it('should reflect the state of the keyboard on keydown', function () {
     expect(keyboard.isKeyPressed(Keyboard.keys.SPACE)).toBeFalsy();
 
-    KeyboardTestsHelper.keydown(Keyboard.keys.SPACE);
+    keydown(Keyboard.keys.SPACE);
 
     expect(keyboard.isKeyPressed(Keyboard.keys.SPACE)).toBeTruthy();
   });
 
   it('should reflect the state of the keyboard on keyup', function () {
-    KeyboardTestsHelper.keydown(Keyboard.keys.SPACE);
-    KeyboardTestsHelper.keyup(Keyboard.keys.SPACE);
+    keydown(Keyboard.keys.SPACE);
+    keyup(Keyboard.keys.SPACE);
 
     expect(keyboard.isKeyPressed(Keyboard.keys.SPACE)).toBeFalsy();
   });
@@ -37,4 +37,64 @@ describe('Keyboard', function () {
     expect(keyboard1).not.toBeUndefined();
     expect(keyboard1).toEqual(keyboard2);
   })
+
+  function keydown(k) {
+    var oEvent = document.createEvent('KeyboardEvent');
+
+    // Chromium Hack
+    Object.defineProperty(oEvent, 'keyCode', {
+      get: function () {
+        return this.keyCodeVal;
+      }
+    });
+    Object.defineProperty(oEvent, 'which', {
+      get: function () {
+        return this.keyCodeVal;
+      }
+    });
+
+    if (oEvent.initKeyboardEvent) {
+      oEvent.initKeyboardEvent("keydown", true, true, document.defaultView, false, false, false, false, k, k);
+    } else {
+      oEvent.initKeyEvent("keydown", true, true, document.defaultView, false, false, false, false, k, 0);
+    }
+
+    oEvent.keyCodeVal = k;
+
+    if (oEvent.keyCode !== k) {
+      alert("keyCode mismatch " + oEvent.keyCode + "(" + oEvent.which + ")");
+    }
+
+    document.dispatchEvent(oEvent);
+  };
+
+  function keyup(k) {
+    var oEvent = document.createEvent('KeyboardEvent');
+
+    // Chromium Hack
+    Object.defineProperty(oEvent, 'keyCode', {
+      get: function () {
+        return this.keyCodeVal;
+      }
+    });
+    Object.defineProperty(oEvent, 'which', {
+      get: function () {
+        return this.keyCodeVal;
+      }
+    });
+
+    if (oEvent.initKeyboardEvent) {
+      oEvent.initKeyboardEvent("keyup", true, true, document.defaultView, false, false, false, false, k, k);
+    } else {
+      oEvent.initKeyEvent("keyup", true, true, document.defaultView, false, false, false, false, k, 0);
+    }
+
+    oEvent.keyCodeVal = k;
+
+    if (oEvent.keyCode !== k) {
+      alert("keyCode mismatch " + oEvent.keyCode + "(" + oEvent.which + ")");
+    }
+
+    document.dispatchEvent(oEvent);
+  }
 });
