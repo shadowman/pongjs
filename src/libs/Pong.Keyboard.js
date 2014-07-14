@@ -1,46 +1,51 @@
-var Keyboard = function(element) {
-	var self = this,
-		currentKeysState = { };
-	
-	
-	
-	self._onKeyUp = function(event) {
-		currentKeysState[event.keyCode] = false;
-	};
+'use strict';
 
-	self._onKeyDown = function(event) {
-		currentKeysState[event.keyCode] = true;
-	};
+var Keyboard = function (element) {
+  var currentKeysState = {};
 
-	self.isKeyPressed = function(key) {
-		return currentKeysState[key] ? currentKeysState[key] : false;
-	};
-	
-	self._init = function(element) {
-		element.addEventListener('keyup', self._onKeyUp, true);
-		element.addEventListener('keydown', self._onKeyDown, true);
-	};
-	
-	self._init(element);
+  _.extend(
+    this, {
+      isKeyPressed: function (key) {
+        return currentKeysState[key] ? currentKeysState[key] : false;
+      }
+    }
+  );
 
-	return self;
+  addEventListeners(element);
+
+  function addEventListeners(element) {
+    element.addEventListener('keyup', onKeyUp, true);
+    element.addEventListener('keydown', onKeyDown, true);
+
+    function onKeyUp(event) {
+      currentKeysState[event.keyCode] = false;
+    }
+
+    function onKeyDown(event) {
+      currentKeysState[event.keyCode] = true;
+    }
+  }
 };
 
-Keyboard.getGlobalKeyboard = function() {
-	if (!this.instance) {
-		this.instance = new Keyboard(window);
-	}
-	return this.instance;
-};
+_.extend(
+  Keyboard, {
+    getGlobalKeyboard: function () {
+      if (!this.instance) {
+        this.instance = new Keyboard(window);
+      }
+      return this.instance;
+    },
 
-Keyboard.keys = {
-	SPACE 		: 32,
-	LEFT  		: 37,
-	RIGHT 		: 39,
-	CTRL  		: 17,
-	Q  	  		: 81,
-	A  	  		: 65,
-	D  	  		: 68,
-	SHIFT 		: 16,
-	ALT 		: 18
-};
+    keys: {
+      SPACE: 32,
+      LEFT: 37,
+      RIGHT: 39,
+      CTRL: 17,
+      Q: 81,
+      A: 65,
+      D: 68,
+      SHIFT: 16,
+      ALT: 18
+    }
+  }
+);

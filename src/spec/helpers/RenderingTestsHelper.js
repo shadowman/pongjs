@@ -1,3 +1,5 @@
+'use strict';
+
 var RenderingTestsHelper = RenderingTestsHelper || {
 	create2dRenderContext: function() {
 		var canvas = document.createElement('canvas');
