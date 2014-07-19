@@ -1,29 +1,20 @@
 var Keyboard = function(element) {
-	var self = this,
-		currentKeysState = { };
-	
-	
-	
-	self._onKeyUp = function(event) {
-		currentKeysState[event.keyCode] = false;
-	};
+	var currentKeysState = {};
 
-	self._onKeyDown = function(event) {
-		currentKeysState[event.keyCode] = true;
-	};
-
-	self.isKeyPressed = function(key) {
+	element.addEventListener('keyup', onKeyUp, false);
+	element.addEventListener('keydown', onKeyDown, false);
+	
+	this.isKeyPressed = function(key) {
 		return currentKeysState[key] ? currentKeysState[key] : false;
 	};
 	
-	self._init = function(element) {
-		element.addEventListener('keyup', self._onKeyUp, false);
-		element.addEventListener('keydown', self._onKeyDown, false);
+	function onKeyUp (event) {
+		currentKeysState[event.keyCode] = false;
 	};
-	
-	self._init(element);
 
-	return self;
+	function onKeyDown (event) {
+		currentKeysState[event.keyCode] = true;
+	};
 };
 
 Keyboard.getGlobalKeyboard = function() {
