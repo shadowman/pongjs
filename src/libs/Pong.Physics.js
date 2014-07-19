@@ -1,7 +1,6 @@
-var Physics = function() {
-	var self = this;
+var physics = {
 
-	self.integrate = function(dt, state) {
+	integrate: function(dt, state) {
 		state.position = state.position || $V([0,0]);
 		state.velocity = state.velocity || $V([0,0]);
 		state.acceleration = state.acceleration || $V([0,0]);
@@ -19,7 +18,5 @@ var Physics = function() {
 		);
 
 		return state;
-	};
-
-	return self;
+	}
 };

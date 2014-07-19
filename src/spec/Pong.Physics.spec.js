@@ -1,10 +1,4 @@
 describe('Physics', function() {
-	var physics;
-
-	beforeEach(function() {
-		physics = new Physics(); 
-	});
-
 	it('should integrate objects with no state as not moving', function() {
 		var obj = { };
 		var dt  = 16;
